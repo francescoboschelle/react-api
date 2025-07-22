@@ -39,10 +39,10 @@ export default function App() {
     <>
       <div className="container mt-5 mb-5">
         <h1 className="text-center">Lista Attori & Attrici</h1>
-        <div class="mb-3 mt-3">
+        <div className="mb-3 mt-3">
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             name=""
             id=""
             aria-describedby="helpId"
@@ -70,8 +70,8 @@ export default function App() {
                         <div className="card-body d-flex flex-column justify-content-between h-100">
                           <h4 className="card-title">{actress.name}</h4>
                           <p className="card-text">{actress.biography}</p>
-                          <div class="table-responsive">
-                            <table class="table">
+                          <div className="table-responsive">
+                            <table className="table">
                               <thead>
                                 <tr>
                                   <th scope="col">Born</th>
@@ -80,7 +80,7 @@ export default function App() {
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr class="">
+                                <tr className="">
                                   <td scope="row">{actress.birth_year}</td>
                                   <td>{actress.awards}</td>
                                   <td>{actress.nationality}</td>
@@ -89,7 +89,7 @@ export default function App() {
                             </table>
                           </div>
 
-                          <ul class="list-group list-group-numbered">
+                          <ul className="list-group list-group-numbered">
                             <p className="card-text">
                               <strong>Most famous movies:</strong>
                             </p>
@@ -97,7 +97,7 @@ export default function App() {
                               (movie, movIndex) => {
                                 return (
                                   <li
-                                    class="list-group-item"
+                                    className="list-group-item"
                                     key={`movie:${index}:${movIndex}`}
                                   >
                                     {movie}
