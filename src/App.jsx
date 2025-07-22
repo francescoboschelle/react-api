@@ -1,39 +1,43 @@
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const [currentData, setCurrentData] = useState(null);
+  const [fullData, setFullData] = useState(null);
+  const [displayedData, setDisplayedData] = useState(null);
 
-  function fetchUrl() {
-    fetch("https://lanciweb.github.io/demo/api/actresses/")
-      .then((res) => res.json())
-      .then((data) => setCurrentData(data));
-  }
+  useEffect(() => {
+    async function fetchUrl() {
+      const fetchedData = [];
+      await fetch("https://lanciweb.github.io/demo/api/actresses/")
+        .then((res) => res.json())
+        .then((data) => fetchedData.push(...data));
 
-  useEffect(() => fetchUrl(), []);
+      await fetch("https://lanciweb.github.io/demo/api/actors/")
+        .then((res) => res.json())
+        .then((data) => fetchedData.push(...data));
+
+      console.log(fetchedData);
+
+      setFullData(fetchedData);
+    }
+    fetchUrl();
+  }, []);
+
+  useEffect(() => {
+    setDisplayedData(fullData);
+  }, [fullData]);
 
   return (
     <>
       <div className="container mt-5 mb-5">
         <h1 className="text-center">Lista Attrici</h1>
-        <div className="mt-3 mb-5 text-center">
-          <button
-            type="button"
-            name=""
-            id=""
-            className="btn btn-primary"
-            onClick={fetchUrl}
-          >
-            Fetch data
-          </button>
-        </div>
 
         <hr />
 
         <section>
           <div className="container">
             <div className="row justify-content-center g-2">
-              {currentData &&
-                currentData?.map((actress, index) => {
+              {displayedData &&
+                displayedData?.map((actress, index) => {
                   return (
                     <div className="col-4" key={`actress:${index}`}>
                       <div className="card h-100">
@@ -69,7 +73,7 @@ export default function App() {
                             <p className="card-text">
                               <strong>Most famous movies:</strong>
                             </p>
-                            {actress.most_famous_movies.map(
+                            {actress.most_famous_movies?.map(
                               (movie, movIndex) => {
                                 return (
                                   <li
