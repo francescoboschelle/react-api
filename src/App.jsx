@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function App() {
   const [fullData, setFullData] = useState(null);
   const [displayedData, setDisplayedData] = useState(null);
+  const [filter, setFilter] = useState(null);
 
   useEffect(() => {
     async function fetchUrl() {
@@ -15,21 +16,40 @@ export default function App() {
         .then((res) => res.json())
         .then((data) => fetchedData.push(...data));
 
-      console.log(fetchedData);
-
       setFullData(fetchedData);
     }
     fetchUrl();
   }, []);
 
   useEffect(() => {
-    setDisplayedData(fullData);
-  }, [fullData]);
+    let filteredData;
+    if (filter) {
+      filteredData = fullData.filter((actor) => actor.name.startsWith(filter));
+    } else if (filter === "") {
+      setFilter(null);
+      filteredData = fullData;
+    } else {
+      filteredData = fullData;
+    }
+
+    setDisplayedData(filteredData);
+  }, [fullData, filter]);
 
   return (
     <>
       <div className="container mt-5 mb-5">
-        <h1 className="text-center">Lista Attrici</h1>
+        <h1 className="text-center">Lista Attori & Attrici</h1>
+        <div class="mb-3 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            name=""
+            id=""
+            aria-describedby="helpId"
+            placeholder="Filtra per nome"
+            onChange={(e) => setFilter(e.target.value)}
+          />
+        </div>
 
         <hr />
 
@@ -47,7 +67,7 @@ export default function App() {
                           src={actress.image}
                           alt={actress.name}
                         />
-                        <div className="card-body">
+                        <div className="card-body d-flex flex-column justify-content-between h-100">
                           <h4 className="card-title">{actress.name}</h4>
                           <p className="card-text">{actress.biography}</p>
                           <div class="table-responsive">
