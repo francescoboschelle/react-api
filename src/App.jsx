@@ -24,7 +24,9 @@ export default function App() {
   useEffect(() => {
     let filteredData;
     if (filter) {
-      filteredData = fullData.filter((actor) => actor.name.startsWith(filter));
+      filteredData = fullData.filter((actor) =>
+        actor.name.toLowerCase().startsWith(filter)
+      );
     } else if (filter === "") {
       setFilter(null);
       filteredData = fullData;
@@ -47,7 +49,7 @@ export default function App() {
             id=""
             aria-describedby="helpId"
             placeholder="Filtra per nome"
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => setFilter(e.target.value.toLowerCase())}
           />
         </div>
 
